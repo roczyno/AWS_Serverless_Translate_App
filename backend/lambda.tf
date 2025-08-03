@@ -90,20 +90,20 @@ resource "aws_iam_role_policy" "lambda_policy" {
 
 data "archive_file" "api_handler" {
   type        = "zip"
-  source_file = "${path.module}/api_handler.py"
-  output_path = "${path.module}/api_handler.zip"
+  source_file = "${path.module}/lambda_functions/api_handler.py"
+  output_path = "${path.module}/lambda_functions/api_handler.zip"
 }
 
 data "archive_file" "translation_worker" {
   type        = "zip"
-  source_file = "${path.module}/translation_worker.py"
-  output_path = "${path.module}/translation_worker.zip"
+  source_file = "${path.module}/lambda_functions/translation_worker.py"
+  output_path = "${path.module}/lambda_functions/translation_worker.zip"
 }
 
 data "archive_file" "cors_handler" {
   type        = "zip"
-  source_file = "${path.module}/cors_handler.py"
-  output_path = "${path.module}/cors_handler.zip"
+  source_file = "${path.module}/lambda_functions/cors_handler.py"
+  output_path = "${path.module}/lambda_functions/cors_handler.zip"
 }
 
 
