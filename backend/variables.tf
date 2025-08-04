@@ -27,3 +27,15 @@ variable "allowed_origins" {
   type        = list(string)
   default     = ["http://localhost:5173", "http://localhost:3000"]
 }
+
+variable "github_repo_url" {
+  description = "GitHub repository URL for Amplify integration"
+  type        = string
+}
+
+variable "github_access_token" {
+  description = "GitHub access token for Amplify integration"
+  type        = string
+  sensitive   = true
+  
+}
