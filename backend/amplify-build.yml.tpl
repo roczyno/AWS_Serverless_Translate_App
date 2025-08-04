@@ -10,7 +10,6 @@ frontend:
     build:
       commands:
         - ls -la
-        - cd Frontend
         - pwd
         - echo "Setting up environment variables"
         - echo "VITE_API_URL=${api_gateway_url}" >> .env.production
