@@ -3,14 +3,10 @@ frontend:
   phases:
     preBuild:
       commands:
-        - ls -la
         - cd Frontend
-        - pwd
         - npm install
     build:
       commands:
-        - pwd
-        - ls -la
         - echo "Setting up environment variables"
         - echo "VITE_API_URL=${api_gateway_url}" >> .env.production
         - echo "VITE_COGNITO_USER_POOL_ID=${cognito_user_pool_id}" >> .env.production
@@ -24,4 +20,4 @@ frontend:
       - '**/*'
   cache:
     paths:
-      - Frontend/node_modules/**/* 
+      - Frontend/node_modules/**/*
