@@ -1,17 +1,16 @@
-# AWS Amplify App for Frontend Deployment (Fully Automated)
+
 resource "aws_amplify_app" "frontend" {
   name        = "${var.project_name}-frontend-${random_string.suffix.result}"
   description = "Frontend application for document translation service"
-  
-  # Direct Git integration - no manual connection needed
+
   repository   = var.github_repo_url
   access_token = var.github_access_token
   platform     = "WEB"
   
-  # Enable automatic builds
+
   enable_branch_auto_build = true
   
-  # Build settings for React/Vite app
+ 
   build_spec = templatefile("${path.module}/amplify-build.yml.tpl", {
     api_gateway_url = aws_api_gateway_stage.main.invoke_url
     cognito_user_pool_id = aws_cognito_user_pool.main.id
@@ -20,10 +19,10 @@ resource "aws_amplify_app" "frontend" {
     aws_region = var.aws_region
   })
 
-  # IAM service role for Amplify
+
   iam_service_role_arn = aws_iam_role.amplify_service_role.arn
 
-  # Custom rules for SPA routing
+
   custom_rule {
     source = "/assets/<*>"
     target = "/assets/<*>"
@@ -43,17 +42,17 @@ resource "aws_amplify_app" "frontend" {
   }
 }
 
-# Main branch for the Amplify app
+
 resource "aws_amplify_branch" "main" {
   app_id            = aws_amplify_app.frontend.id
   branch_name       = "main"
   stage             = "DEVELOPMENT"
   enable_auto_build = true
   
-  # Framework detection
+
   framework = "React"
   
-  # Environment variables for the branch
+
   environment_variables = {
     VITE_API_URL = aws_api_gateway_stage.main.invoke_url
     VITE_COGNITO_USER_POOL_ID = aws_cognito_user_pool.main.id
@@ -69,7 +68,7 @@ resource "aws_amplify_branch" "main" {
   }
 }
 
-# Automatic build trigger - no manual intervention needed
+
 resource "terraform_data" "trigger_amplify_build" {
   depends_on = [aws_amplify_branch.main, aws_amplify_app.frontend]
 
@@ -84,7 +83,7 @@ resource "terraform_data" "trigger_amplify_build" {
   }
 }
 
-# S3 bucket for Amplify build artifacts
+
 resource "aws_s3_bucket" "amplify_artifacts" {
   bucket = "${var.project_name}-amplify-artifacts-${random_string.suffix.result}"
   
@@ -95,7 +94,7 @@ resource "aws_s3_bucket" "amplify_artifacts" {
   }
 }
 
-# S3 bucket versioning
+
 resource "aws_s3_bucket_versioning" "amplify_artifacts" {
   bucket = aws_s3_bucket.amplify_artifacts.id
   versioning_configuration {
@@ -103,7 +102,7 @@ resource "aws_s3_bucket_versioning" "amplify_artifacts" {
   }
 }
 
-# S3 bucket public access block
+
 resource "aws_s3_bucket_public_access_block" "amplify_artifacts" {
   bucket = aws_s3_bucket.amplify_artifacts.id
 
@@ -113,7 +112,6 @@ resource "aws_s3_bucket_public_access_block" "amplify_artifacts" {
   restrict_public_buckets = true
 }
 
-# IAM role for Amplify service
 resource "aws_iam_role" "amplify_service_role" {
   name = "${var.project_name}-amplify-service-role-${random_string.suffix.result}"
 
@@ -137,7 +135,7 @@ resource "aws_iam_role" "amplify_service_role" {
   }
 }
 
-# IAM policy for Amplify service role
+
 resource "aws_iam_role_policy" "amplify_service_policy" {
   name = "${var.project_name}-amplify-service-policy-${random_string.suffix.result}"
   role = aws_iam_role.amplify_service_role.id

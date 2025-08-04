@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# AWS Serverless Translation - Fully Automated Deployment
-# This script deploys everything with ZERO manual intervention
+
 
 set -e
 

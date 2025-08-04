@@ -25,3 +25,23 @@ output "api_gateway_endpoints" {
     languages    = "${aws_api_gateway_stage.main.invoke_url}/languages"
   }
 }
+
+output "amplify_app_id" {
+  description = "AWS Amplify App ID"
+  value       = aws_amplify_app.frontend.id
+}
+
+output "amplify_app_url" {
+  description = "AWS Amplify App URL"
+  value       = "https://${aws_amplify_branch.main.branch_name}.${aws_amplify_app.frontend.id}.amplifyapp.com"
+}
+
+output "amplify_branch_url" {
+  description = "AWS Amplify Branch URL"
+  value       = aws_amplify_branch.main.branch_name == "main" ? "https://${aws_amplify_app.frontend.id}.amplifyapp.com" : "https://${aws_amplify_branch.main.branch_name}.${aws_amplify_app.frontend.id}.amplifyapp.com"
+}
+
+output "frontend_url" {
+  description = "Frontend application URL"
+  value       = aws_amplify_branch.main.branch_name == "main" ? "https://${aws_amplify_app.frontend.id}.amplifyapp.com" : "https://${aws_amplify_branch.main.branch_name}.${aws_amplify_app.frontend.id}.amplifyapp.com"
+}
