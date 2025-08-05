@@ -13,6 +13,7 @@ A modern, serverless document translation application built with AWS services, f
 - **Automated Deployment**: One-click deployment with Terraform and AWS Amplify
 
 ## 🏗️ Architecture
+![Architecture Diagram](diagram-export-8-5-2025-9_05_56-AM.png)
 
 ### Frontend
 
