@@ -54,9 +54,9 @@ resource "aws_amplify_branch" "main" {
   
 
   environment_variables = {
-    VITE_API_URL = aws_api_gateway_stage.main.invoke_url
+    VITE_API_BASE_URL = aws_api_gateway_stage.main.invoke_url
     VITE_COGNITO_USER_POOL_ID = aws_cognito_user_pool.main.id
-    VITE_COGNITO_USER_POOL_CLIENT_ID = aws_cognito_user_pool_client.web_client.id
+    VITE_COGNITO_CLIENT_ID = aws_cognito_user_pool_client.web_client.id
     VITE_COGNITO_DOMAIN = aws_cognito_user_pool_domain.main.domain
     VITE_REGION = var.aws_region
   }
